@@ -16,6 +16,7 @@ function addToDoJob(event) {
     
     // li 태그로 할 일 추가
     const li = document.createElement("li");
+    li.classList.add("todo-job");
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
