@@ -1,51 +1,55 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
+import { UserContext } from "./UserContext";
 
-const Input = ({ input, onInput }) => {
-  return <input type="text" value={input} onChange={onInput} />;
+const Input = () => {
+  const { inputValue, setInputValue } = useContext(UserContext);
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  return <input type="text" value={inputValue} onChange={handleInputChange} />;
 };
 
-const Submit = () => <button type="submit">submit</button>;
+const Submit = () => {
+  return <button>submit</button>;
+};
 
-const Reset = ({ onReset }) => {
+const Reset = () => {
+  const { setName, setInputValue } = useContext(UserContext);
+
+  const handleReset = () => {
+    setName("");
+    setInputValue("");
+  };
+
   return (
-    <button type="button" onClick={onReset}>
+    <button type="button" onClick={handleReset}>
       reset
     </button>
   );
 };
 
-const Form = ({ input, onInput, onSubmit, onReset }) => {
+const Form = () => {
+  const { setName, inputValue, setInputValue } = useContext(UserContext);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setName(inputValue);
+    setInputValue("");
+  };
+
   return (
-    <form onSubmit={onSubmit}>
-      <Input input={input} onInput={onInput} />
+    <form onSubmit={handleSubmit}>
+      <Input />
       <Submit />
-      <Reset onReset={onReset} />
+      <Reset />
     </form>
   );
 };
 
 const User = () => {
-  const [name, setName] = useState("");
-  const [input, setInput] = useState("");
-
-  useEffect(() => {
-    console.log("Component mounted or page reloaded");
-  }, []);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setName(input);
-    setInput("");
-  };
-
-  const handleInput = (event) => {
-    setInput(event.target.value);
-  };
-
-  const handleReset = () => {
-    setInput("");
-    setName("");
-  };
+  const { name } = useContext(UserContext);
 
   const renderGreeting = () => {
     if (name === "") {
@@ -58,12 +62,7 @@ const User = () => {
   return (
     <div>
       {renderGreeting()}
-      <Form
-        input={input}
-        onInput={handleInput}
-        onSubmit={handleSubmit}
-        onReset={handleReset}
-      />
+      <Form />
     </div>
   );
 };
