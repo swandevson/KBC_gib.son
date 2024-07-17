@@ -1,18 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+const Input = ({ input, onInput }) => {
+  return <input type="text" value={input} onChange={onInput} />;
+};
+
+const Submit = () => <button type="submit">submit</button>;
+
+const Reset = ({ onReset }) => {
+  return (
+    <button type="button" onClick={onReset}>
+      reset
+    </button>
+  );
+};
+
+const Form = ({ input, onInput, onSubmit, onReset }) => {
+  return (
+    <form onSubmit={onSubmit}>
+      <Input input={input} onInput={onInput} />
+      <Submit />
+      <Reset onReset={onReset} />
+    </form>
+  );
+};
 
 const User = () => {
   const [name, setName] = useState("");
   const [input, setInput] = useState("");
 
-  const handleChange = (event) => {
-    setInput(event.target.value);
-    event.target.value = "";
-  };
+  useEffect(() => {
+    console.log("Component mounted or page reloaded");
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setInput("");
     setName(input);
+    setInput("");
+  };
+
+  const handleInput = (event) => {
+    setInput(event.target.value);
+  };
+
+  const handleReset = () => {
+    setInput("");
+    setName("");
   };
 
   const renderGreeting = () => {
@@ -23,19 +55,15 @@ const User = () => {
     }
   };
 
-  const handleReset = () => {
-    setInput(null);
-    setName(null);
-  };
-
   return (
     <div>
       {renderGreeting()}
-      <form>
-        <input type="text" value={input} onChange={handleChange} />
-        <button onClick={handleSubmit}>submit</button>
-        <button onClick={handleReset}>reset</button>
-      </form>
+      <Form
+        input={input}
+        onInput={handleInput}
+        onSubmit={handleSubmit}
+        onReset={handleReset}
+      />
     </div>
   );
 };
