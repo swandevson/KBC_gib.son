@@ -21,6 +21,7 @@ const Reset = () => {
   const handleReset = () => {
     setName("");
     setInputValue("");
+    window.localStorage.setItem("name", "");
   };
 
   return (
@@ -35,6 +36,7 @@ const Form = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    localStorage.setItem("name", inputValue);
     setName(inputValue);
     setInputValue("");
   };
