@@ -1,6 +1,7 @@
 import "./App.css";
-import User from "./User.js";
-import { UserProvider } from "./UserContext";
+import User from "./user/User";
+import Clock from "./clock/Clock";
+import { UserProvider } from "./user/UserContext";
 
 const App = () => {
   return (
@@ -8,6 +9,7 @@ const App = () => {
       <UserProvider>
         <User />
       </UserProvider>
+      <Clock />
     </>
   );
 };
