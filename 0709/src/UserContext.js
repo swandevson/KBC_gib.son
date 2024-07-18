@@ -7,7 +7,7 @@ const UserProvider = ({ children }) => {
   const [name, setName] = useState("");
 
   return (
-    <UserContext.Provider value={(inputValue, setInputValue, name, setName)}>
+    <UserContext.Provider value={{ inputValue, setInputValue, name, setName }}>
       {children}
     </UserContext.Provider>
   );
